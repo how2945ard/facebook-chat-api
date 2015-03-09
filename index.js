@@ -87,6 +87,7 @@ function _login(email, password, callback) {
         jar.setCookie(c, "https://www.facebook.com");
     ***REMOVED***;
 
+      if (!res.headers.location) return callback({error: "Wrong username/password."***REMOVED***;
       _get(res.headers.location, jar, function(err, res, html) {
         console.log("Logged in");
 
