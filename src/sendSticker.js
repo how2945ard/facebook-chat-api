@@ -51,9 +51,9 @@ module.exports = function(mergeWithDefaults, api, ctx) {
 
       utils.post("https://www.facebook.com/ajax/mercury/send_messages.php", ctx.jar, form)
       .then(utils.parseResponse)
-      .then(function(ret) {
-        if (!ret) return callback({error: "Send message failed."***REMOVED***;
-        if(ret.error) return callback(ret);
+      .then(function(resData) {
+        if (!resData) return callback({error: "Send message failed."***REMOVED***;
+        if(resData.error) return callback(resData);
 
         callback();
     ***REMOVED***
