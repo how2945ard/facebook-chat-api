@@ -10,7 +10,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     if (typeof sticker_id !== "number" && typeof sticker_id !== "string")
       return callback({error: "Sticker_id should be of type number or string and not " + typeof msg + "."***REMOVED***;
     if (typeof thread_id !== "number" && typeof thread_id !== "string")
-      return callback({error: "Thread_id should be of type number or string and not " + typeof msg + "."***REMOVED***;
+      return callback({error: "Thread_id should be of type number or string and not " + typeof thread_id + "."***REMOVED***;
 
     var form = mergeWithDefaults({
       'client' : 'mercury',
