@@ -10,10 +10,10 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     if(!callback) callback = function() {};
 
-    if (typeof stickerId !== "number" && typeof stickerId !== "string")
-      return callback({error: "StickerId should be of type number or string and not " + typeof msg + "."***REMOVED***;
-    if (typeof threadID !== "number" && typeof threadID !== "string")
-      return callback({error: "ThreadID should be of type number or string and not " + typeof threadID + "."***REMOVED***;
+    if (utils.getType(stickerId) !== "Number" && utils.getType(stickerId) !== "String")
+      return callback({error: "StickerId should be of type Number or String and not " + utils.getType(msg) + "."***REMOVED***;
+    if (utils.getType(threadID) !== "Number" && utils.getType(threadID) !== "String")
+      return callback({error: "ThreadID should be of type Number or String and not " + utils.getType(threadID) + "."***REMOVED***;
 
     var messageAndOTID = utils.generateOfflineThreadingID();
     var form = {
