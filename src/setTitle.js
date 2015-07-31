@@ -5,7 +5,7 @@ var utils = require("../utils");
 var log = require("npmlog");
 
 module.exports = function(mergeWithDefaults, api, ctx) {
-  return function setTitle(newTitle, thread_id, callback) {
+  return function setTitle(newTitle, threadFbid, callback) {
     if(!callback) callback = function() {};
 
     var messageAndOTID = utils.generateOfflineThreadingID();
@@ -32,7 +32,7 @@ module.exports = function(mergeWithDefaults, api, ctx) {
       'message_batch[0][message_id]' : messageAndOTID,
       'message_batch[0][threading_id]': utils.generateThreadingID(ctx.clientid),
       'message_batch[0][manual_retry_cnt]' : '0',
-      'message_batch[0][thread_fbid]' : thread_id,
+      'message_batch[0][thread_fbid]' : threadFbid,
       'message_batch[0][log_message_data][name]' : newTitle,
       'message_batch[0][log_message_type]' : 'log:thread-name'
   ***REMOVED***;
@@ -41,12 +41,16 @@ module.exports = function(mergeWithDefaults, api, ctx) {
     .then(utils.parseResponse)
     .then(function(resData) {
       if (resData.error && resData.error === 1545012){
-        callback({error: "Cannot change chat title: Not member of chat."***REMOVED***;
-      } else if (resData.error && resData.error === 1545003){
-        callback({error: "Cannot set title of single-user chat."***REMOVED***;
-      } else if (resData.error) {
-        callback(resData);
-      } else callback();
+        return callback({error: "Cannot change chat title: Not member of chat."***REMOVED***;
+      }
+
+      if (resData.error && resData.error === 1545003){
+        return callback({error: "Cannot set title of single-user chat."***REMOVED***;
+      }
+
+      if (resData.error) return callback(resData);
+
+      return callback();
   ***REMOVED***
     .catch(function(err) {
       log.error("Error in setTitle", err);
