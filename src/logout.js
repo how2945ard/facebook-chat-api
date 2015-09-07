@@ -43,6 +43,8 @@ module.exports = function(defaultFuncs, api, ctx) {
           .then(utils.saveCookies(ctx.jar));
     ***REMOVED***
       .then(function() {
+        ctx.loggedIn = false;
+        log.info("Logged out successfully.");
         callback();
     ***REMOVED***
       .catch(function(err) {
