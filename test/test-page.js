@@ -8,10 +8,6 @@ var credentials = {
   password: conf.user.password,
 };
 
-try {
-  credentials.appState = JSON.parse(fs.readFileSync('test/test-appstate.json', 'utf8'));
-} catch (e) {}
-
 var userIDs = conf.userIDs;
 
 var options = {
@@ -57,7 +53,6 @@ describe('Login As Page:', function() {
       ***REMOVED***;
     ***REMOVED***;
 
-      fs.writeFileSync('test/test-appstate.json', JSON.stringify(api.getAppState()));
       done();
   ***REMOVED***;
 ***REMOVED***;
@@ -145,6 +140,10 @@ describe('Login As Page:', function() {
       data.map(function(v) {parseInt(v);***REMOVED***;
       done();
   ***REMOVED***;
+***REMOVED***;
+
+  it('should log out', function (done) {
+    api.logout(done);
 ***REMOVED***;
 
   after(function (){
