@@ -242,13 +242,13 @@ function _formatAttachment(attachment1, attachment2) {
 
 function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
   attachmentMap = shareMap || attachmentMap;
-  return attachments.map(function(val, i) {
+  return attachments ? attachments.map(function(val, i) {
     // TODO: THIS IS REALLY BAD
     if (!attachmentMap || !attachmentIds){
       return _formatAttachment(val, {id:"", image_data: {}***REMOVED***;
     }
     return _formatAttachment(val, attachmentMap[attachmentIds[i]]);
-***REMOVED***;
+***REMOVED*** : [];
 }
 
 function formatMessage(m) {
