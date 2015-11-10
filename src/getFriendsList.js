@@ -46,7 +46,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     defaultFuncs
-      .postFormData("https://www.facebook.com/chat/user_info_all", ctx.jar, {***REMOVED***viewer: 1216678154***REMOVED***
+      .postFormData("https://www.facebook.com/chat/user_info_all", ctx.jar, {***REMOVED***viewer: ctx.userID***REMOVED***
       .then(utils.parseAndCheckLogin)
       .then(function(resData) {
         if (!resData) {
