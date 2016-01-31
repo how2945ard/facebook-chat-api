@@ -567,6 +567,7 @@ function formatThread(data) {
   return {
     threadID: data.thread_fbid.toString(),
     participants: data.participants.map(function(v) { return v.replace('fbid:', ''); ***REMOVED***,
+    participantIDs: data.participants.map(function(v) { return v.replace('fbid:', ''); ***REMOVED***,
     formerParticipants: data.former_participants,
     name: data.name,
     snippet: data.snippet,
