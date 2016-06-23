@@ -152,12 +152,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     if(utils.getType(threadID) === "Array") {
       sendContent(form, threadID, false, messageAndOTID, callback);
     } else {
-      api.getUserInfo(threadID, function(err, res) {
-        if(err) {
-          return callback(err);
-        }
-        sendContent(form, threadID, Object.keys(res).length > 0, messageAndOTID, callback);
-    ***REMOVED***;
+      sendContent(form, threadID, true, messageAndOTID, callback);
     }
   }
 
