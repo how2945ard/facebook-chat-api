@@ -18,9 +18,11 @@
 * [`api.deleteThread`](#deleteThread)
 * [`api.getUserID`](#getUserID)
 * [`api.getUserInfo`](#getUserInfo)
+* [`api.handleMessageRequest`](#handleMessageRequest)
 * [`api.listen`](#listen)
 * [`api.logout`](#logout)
 * [`api.markAsRead`](#markAsRead)
+* [`api.muteThread`](#muteThread)
 * [`api.removeUserFromGroup`](#removeUserFromGroup)
 * [`api.searchForThread`](#searchForThread)
 * [`api.sendMessage`](#sendMessage)
@@ -359,7 +361,7 @@ __Arguments__
 ---------------------------------------
 
 <a name="getThreadList" />
-### api.getThreadList(start, end, callback)
+### api.getThreadList(start, end, type, callback)
 
 Will return information about threads.
 
@@ -367,6 +369,7 @@ __Arguments__
 
 * `start`: Start index in the list of recently used threads.
 * `end`: End index.
+* `type`: Optional String, can be 'inbox', 'pending', or 'archived'. Inbox is default.
 * `callback(err, arr)`: A callback called when the query is done (either with an error or with an confirmation object). `arr` is an array of thread object containing the following properties: `threadID`, <del>`participants`</del>, `participantIDs`, `formerParticipants`, `name`, `snippet`, `snippetHasAttachment`, `snippetAttachments`, `snippetSender`, `unreadCount`, `messageCount`, `imageSrc`, `timestamp`, `serverTimestamp`, `muteSettings`, `isCanonicalUser`, `isCanonical`, `canonicalFbid`, `isSubscribed`, `rootMessageThreadingID`, `folder`, `isArchived`, `recipientsLoadable`, `hasEmailParticipant`, `readOnly`, `canReply`, `composerEnabled`, `blockedParticipants`, `lastMessageID`.
 
 ---------------------------------------
@@ -452,6 +455,19 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
   ***REMOVED***;
 ***REMOVED***;
 ```
+
+---------------------------------------
+
+<a name="handleMessageRequest" />
+### api.handleMessageRequest(threadID, accept, [callback])
+
+Accept or ignore message request(s) with thread id `threadID`.
+
+__Arguments__
+
+* `threadID`: A threadID or array of threadIDs corresponding to the target thread(s). Can be numbers or strings.
+* `accept`: Boolean indicating the new status to assign to the message request(s); true for inbox, false to others.
+* `callback(err)`: A callback called when the query is done (with an error or with null).
 
 ---------------------------------------
 
@@ -592,6 +608,34 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api)
     api.listen(function callback(err, message) {
         // Marks message as read immediately after they're sent
         api.markAsRead(message.threadID);
+  ***REMOVED***;
+***REMOVED***;
+```
+
+---------------------------------------
+
+<a name="muteThread" />
+### api.muteThread(threadID, muteSeconds, [callback])
+
+Mute a chat for a period of time, or unmute a chat.
+
+__Arguments__
+
+* `threadID` - The ID of the chat you want to mute.
+* `muteSeconds` - Mute the chat for this amount of seconds. Use `0` to unmute a chat. Use '-1' to mute a chat indefinitely.
+* `callback(err)` - A callback called when the operation is done maybe with an object representing an error.
+
+__Example__
+
+```js
+var login = require("facebook-chat-api");
+
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, function callback (err, api) {
+    if(err) return console.error(err);
+
+    api.listen(function callback(err, message) {
+        // Mute all incoming chats for one minute
+        api.muteThread(message.threadID, 60);
   ***REMOVED***;
 ***REMOVED***;
 ```
