@@ -51,7 +51,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               delete v.author;
           ***REMOVED***;
 
-            callback(null, resData.payload.actions.map(utils.formatMessage).filter(utils.filterOutErrors));
+            callback(null, resData.payload.actions.map(utils.formatMessage));
         ***REMOVED***;
       ***REMOVED***
         .catch(function(err) {
