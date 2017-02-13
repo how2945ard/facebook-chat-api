@@ -30,7 +30,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
     ***REMOVED***
       .catch(function(err) {
-        log.error("Error in archiveThread", err);
+        log.error("changeArchivedStatus", err);
         return callback(err);
     ***REMOVED***;
   };

@@ -28,7 +28,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return callback();
     ***REMOVED***
       .catch(function(err) {
-        log.error("Error in markAsRead", err);
+        log.error("markAsRead", err);
         return callback(err);
     ***REMOVED***;
   };
