@@ -30,7 +30,7 @@ module.exports = function (defaultFuncs, api, ctx) {
           ***REMOVED***
       ***REMOVED***
         .catch(function (err) {
-          log.error("Error in changeBlockedStatus", err);
+          log.error("changeBlockedStatus", err);
           return callback(err);
       ***REMOVED***;
     }
@@ -48,7 +48,7 @@ module.exports = function (defaultFuncs, api, ctx) {
           return callback();
       ***REMOVED***
         .catch(function (err) {
-          log.error("Error in changeBlockedStatus", err);
+          log.error("changeBlockedStatus", err);
           return callback(err);
       ***REMOVED***;
 
