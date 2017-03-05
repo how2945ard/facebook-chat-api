@@ -58,7 +58,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         callback(null, formatData(resData.payload));
     ***REMOVED***
       .catch(function(err) {
-        log.error("Error in getFriendsList", err);
+        log.error("getFriendsList", err);
         return callback(err);
     ***REMOVED***;
   };

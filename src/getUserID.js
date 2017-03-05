@@ -48,7 +48,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         callback(null, data.map(formatData));
     ***REMOVED***
       .catch(function(err) {
-        log.error("Error in getUserID", err);
+        log.error("getUserID", err);
         return callback(err);
     ***REMOVED***;
   };
