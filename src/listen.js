@@ -146,6 +146,8 @@ module.exports = function(defaultFuncs, api, ctx) {
                         if (!err) v.delta.attachments[i].mercury.metadata.url = url;
                         return resolveAttachmentUrl(i + 1);
                     ***REMOVED***;
+                    } else {
+                      return resolveAttachmentUrl(i + 1);
                     }
                   }
               ***REMOVED***(0)
