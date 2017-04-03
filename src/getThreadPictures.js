@@ -42,7 +42,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       ***REMOVED***);
     ***REMOVED***
       .then(function(resData) {
-        callback(resData);
+        callback(null, resData);
     ***REMOVED***
       .catch(function(err) {
         log.error("Error in getThreadPictures", err);
