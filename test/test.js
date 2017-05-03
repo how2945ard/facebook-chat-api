@@ -2,7 +2,7 @@ var login = require('../index.js');
 var fs = require('fs');
 var assert = require('assert');
 
-var conf = JSON.parse(fs.readFileSync('test/test-config.json', 'utf8'));
+var conf = JSON.parse(process.env.testconfig || fs.readFileSync('test/test-config.json', 'utf8'));
 var credentials = {
   email: conf.user.email,
   password: conf.user.password,
@@ -13,6 +13,8 @@ var userIDs = conf.userIDs;
 var options = { selfListen: true, listenEvents: true, logLevel: "silent"};
 var pageOptions = {logLevel: 'silent', pageID: conf.pageID};
 var getType = require('../utils').getType;
+var formatDeltaMessage = require('../utils').formatDeltaMessage;
+var shareAttachmentFixture = require('./data/shareAttach');
 
 var userID = conf.user.id;
 
@@ -226,7 +228,7 @@ describe('Login:', function() {
     listen(done, function (msg) {
       return msg.type === 'event' &&
         msg.logMessageType === 'log:unsubscribe' &&
-        msg.logMessageData.removed_participants.indexOf('fbid:' + id) > -1;
+        msg.logMessageData.removed_participants.indexOf(id) > -1;
   ***REMOVED***;
     api.removeUserFromGroup(id, groupChatID, checkErr(done));
 ***REMOVED***;
@@ -259,8 +261,6 @@ describe('Login:', function() {
         done();
     ***REMOVED***;
 ***REMOVED***;
-
-
 
   it('should retrieve a list of threads', function (done) {
     api.getThreadList(0, 20, function(err, res) {
@@ -338,7 +338,6 @@ describe('Login:', function() {
         assert(getType(v.profilePicture) === "String");
         assert(getType(v.type) === "String");
         assert(v.hasOwnProperty("profileUrl"));  // This can be null if the account is disabled
-        assert(getType(v.vanity) === "String");
         assert(getType(v.isBirthday) === "Boolean");
     ***REMOVED***
       done();
@@ -346,6 +345,15 @@ describe('Login:', function() {
       done(e);
     }
   ***REMOVED***;
+***REMOVED***;
+
+  it('should parse share attachment correctly', function () {
+    var formatted = formatDeltaMessage(shareAttachmentFixture);
+    assert(formatted.attachments[0].type === "share");
+    assert(formatted.attachments[0].title === "search engines");
+    assert(formatted.attachments[0].target.items[0].name === "search engines");
+    assert(formatted.attachments[0].target.items[0].call_to_actions.length === 3);
+    assert(formatted.attachments[0].target.items[0].call_to_actions[0].title === "Google");
 ***REMOVED***;
 
   it('should log out', function (done) {
