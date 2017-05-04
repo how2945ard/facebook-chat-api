@@ -70,6 +70,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
     .then(function(resData) {
       var now = Date.now();
+      console.log(resData)
       log.info("listen", "Got answer in " + (now - tmpPrev));
       tmpPrev = now;
       if(resData && resData.t === "lb") {
@@ -220,7 +221,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 return;
               }
               break;
-            case 'page_message':
+            case 'pages_messaging':
               if(!ctx.globalOptions.pageID ||
                 v.event !== "deliver" ||
                 (!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userID ||
