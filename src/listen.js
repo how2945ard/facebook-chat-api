@@ -220,7 +220,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                 return;
               }
               break;
-            case 'pages_messaging':
+            case 'page_message':
               if(!ctx.globalOptions.pageID ||
                 v.event !== "deliver" ||
                 (!ctx.globalOptions.selfListen && (v.message.sender_fbid.toString() === ctx.userID ||
