@@ -38,15 +38,15 @@ module.exports = function(defaultFuncs, api, ctx) {
               var queryThreadID = resData.jsmods.require[0][3][1].query_metadata.query_path[0].message_thread;
               var imageData = resData.jsmods.require[0][3][1].query_results[queryThreadID].message_images.edges[0].node.image2;
               return imageData;
-          ***REMOVED***;
-      ***REMOVED***);
-    ***REMOVED***
+            });
+        }));
+      })
       .then(function(resData) {
         callback(null, resData);
-    ***REMOVED***
+      })
       .catch(function(err) {
         log.error("Error in getThreadPictures", err);
         callback(err);
-    ***REMOVED***;
+      });
   };
 };

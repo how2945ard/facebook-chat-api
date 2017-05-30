@@ -24,10 +24,10 @@ module.exports = function(defaultFuncs, api, ctx) {
           throw resData;
         }
         if (!resData.payload.mercury_payload.threads){
-          return callback({error: "Could not find thread `"+name+"`."***REMOVED***;
+          return callback({error: "Could not find thread `"+name+"`."});
         }
         return callback(null, resData.payload.mercury_payload
           .threads.map(utils.formatThread));
-    ***REMOVED***;
+      });
   };
 };

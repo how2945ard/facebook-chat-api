@@ -32,7 +32,9 @@ module.exports = function(defaultFuncs, api, ctx) {
     'state' : 'active',
     'idle' : 0,
     'cap' : '8',
-    'msgs_recv':msgsRecv
+    'msgs_recv':msgsRecv,
+
+    'aiq': ctx.globalOptions.pageID + ',10',
   };
 
   /**
@@ -70,7 +72,6 @@ module.exports = function(defaultFuncs, api, ctx) {
     .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
     .then(function(resData) {
       var now = Date.now();
-      console.log(resData)
       log.info("listen", "Got answer in " + (now - tmpPrev));
       tmpPrev = now;
       if(resData && resData.t === "lb") {
@@ -97,8 +98,8 @@ module.exports = function(defaultFuncs, api, ctx) {
           defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_sync.php", ctx.jar, form)
           .then(function() {
             currentlyRunning = setTimeout(listen, 1000);
-        ***REMOVED***;
-      ***REMOVED***;
+          });
+        });
         return;
       }
 
@@ -107,7 +108,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         var atLeastOne = false;
         resData.ms.sort(function(a, b) {
           return a.timestamp - b.timestamp;
-      ***REMOVED***.forEach(function parsePackets(v) {
+        }).forEach(function parsePackets(v) {
           switch (v.type) {
             // TODO: 'ttyp' was used before. It changed to 'typ'. We're keeping
             // both for now but we should remove 'ttyp' at some point.
@@ -149,27 +150,48 @@ module.exports = function(defaultFuncs, api, ctx) {
                 if(ctx.loggedIn) {
                   return globalCallback(null, formattedPresence);
                 }
-            ***REMOVED***;
+              });
               break;
             case 'delta':
-              if (ctx.globalOptions.pageID || (v.delta.class !== "NewMessage" && !ctx.globalOptions.listenEvents)) return
-
               if (v.delta.class == "NewMessage") {
                 (function resolveAttachmentUrl(i) {
                   if (i == v.delta.attachments.length) {
                     var fmtMsg = utils.formatDeltaMessage(v);
-                    return (!ctx.globalOptions.selfListen && fmtMsg.senderID === ctx.userID) ? undefined : globalCallback(null, fmtMsg);
+                    if (
+                      (
+                        fmtMsg.senderID === ctx.userID &&
+                        !ctx.globalOptions.pageID &&
+                        !ctx.globalOptions.selfListen) ||
+                      (
+                        ctx.globalOptions.pageID &&
+                        (!ctx.globalOptions.selfListen &&
+                          (
+                            v.delta.messageMetadata &&
+                            v.delta.messageMetadata.actorFbId &&
+                            (
+                              v.delta.messageMetadata.actorFbId.toString() === ctx.userID ||
+                              v.delta.messageMetadata.actorFbId.toString() === ctx.globalOptions.pageID
+                            )
+                          )
+                        ) ||
+                        ctx.globalOptions.selfListen
+                      )
+                    ) {
+                      return undefined
+                    } else {
+                      return globalCallback(null, fmtMsg);
+                    }
                   } else {
                     if (v.delta.attachments[i].mercury.attach_type == 'photo') {
                       api.resolvePhotoUrl(v.delta.attachments[i].fbid, (err, url) => {
                         if (!err) v.delta.attachments[i].mercury.metadata.url = url;
                         return resolveAttachmentUrl(i + 1);
-                    ***REMOVED***;
+                      });
                     } else {
                       return resolveAttachmentUrl(i + 1);
                     }
                   }
-              ***REMOVED***(0)
+                })(0)
                 break;
               }
 
@@ -187,7 +209,7 @@ module.exports = function(defaultFuncs, api, ctx) {
                         senderID: delta.deltaMessageReaction.senderId,
                         userID: delta.deltaMessageReaction.userId,
                         timestamp: v.ofd_ts
-                    ***REMOVED***;
+                      });
                     }
                   }
                   return;
@@ -236,7 +258,7 @@ module.exports = function(defaultFuncs, api, ctx) {
               }
               break;
           }
-      ***REMOVED***;
+        });
 
         if(atLeastOne) {
           // Send deliveryReceipt notification to the server
@@ -244,9 +266,9 @@ module.exports = function(defaultFuncs, api, ctx) {
 
           resData.ms.filter(function(v) {
             return v.message && v.message.mid && v.message.sender_fbid.toString() !== ctx.userID;
-        ***REMOVED***.forEach(function(val, i) {
+          }).forEach(function(val, i) {
             formDeliveryReceipt["[" + i + "]"] = val.message.mid;
-        ***REMOVED***;
+          });
 
           // If there's at least one, we do the post request
           if(formDeliveryReceipt["[0]"]) {
@@ -265,7 +287,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
       }
       return;
-  ***REMOVED***
+    })
     .catch(function(err) {
       if (err.code === 'ETIMEDOUT') {
         log.info("listen", "Suppressed timeout error.");
@@ -278,7 +300,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       if (currentlyRunning) {
         currentlyRunning = setTimeout(listen, Math.random() * 200 + 50);
       }
-  ***REMOVED***;
+    });
   }
 
   return function(callback) {

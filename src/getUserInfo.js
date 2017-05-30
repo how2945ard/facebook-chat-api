@@ -39,7 +39,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     var form = {};
     id.map(function(v, i) {
       form["ids[" + i + "]"] = v;
-  ***REMOVED***;
+    });
     defaultFuncs.post("https://www.facebook.com/chat/user_info/", ctx.jar, form)
     .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
     .then(function(resData) {
@@ -47,10 +47,10 @@ module.exports = function(defaultFuncs, api, ctx) {
         throw resData;
       }
       return callback(null, formatData(resData.payload.profiles));
-  ***REMOVED***
+    })
     .catch(function(err) {
       log.error("getUserInfo", err);
       return callback(err);
-  ***REMOVED***;
+    });
   };
 };

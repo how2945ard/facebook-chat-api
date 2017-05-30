@@ -34,10 +34,10 @@ module.exports = function(defaultFuncs, api, ctx) {
         }
         
         return callback(null);
-    ***REMOVED***
+      })
       .catch(function(err) {
         log.error("forwardAttachment", err);
         return callback(err);
-    ***REMOVED***;
+      });
   };
 };

@@ -17,11 +17,11 @@ module.exports = function(defaultFuncs, api, ctx) {
       .then(function(resData) {
         var elem = resData.jsmods.instances[0][2][0].filter(function(v) {
           return v.value === "logout";
-      ***REMOVED***[0];
+        })[0];
 
         var html = resData.jsmods.markup.filter(function(v) {
           return v[0] === elem.markup.__m;
-      ***REMOVED***[0][1].__html;
+        })[0][1].__html;
 
         var form = {
           fb_dtsg: utils.getFrom(html, "\"fb_dtsg\" value=\"", "\""),
@@ -32,7 +32,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         return utils
           .post('https://www.facebook.com/logout.php', ctx.jar, form)
           .then(utils.saveCookies(ctx.jar));
-    ***REMOVED***
+      })
       .then(function(res) {
         if(!res.headers) {
           throw {error: "An error occurred when logging out."};
@@ -41,15 +41,15 @@ module.exports = function(defaultFuncs, api, ctx) {
         return utils
           .get(res.headers.location, ctx.jar)
           .then(utils.saveCookies(ctx.jar));
-    ***REMOVED***
+      })
       .then(function() {
         ctx.loggedIn = false;
         log.info("logout", "Logged out successfully.");
         callback();
-    ***REMOVED***
+      })
       .catch(function(err) {
         log.error("logout", err);
         return callback(err);
-    ***REMOVED***;
+      });
   };
 };

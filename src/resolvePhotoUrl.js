@@ -10,7 +10,7 @@ module.exports = function (defaultFuncs, api, ctx) {
     }
 
     defaultFuncs
-      .get("https://www.facebook.com/mercury/attachments/photo", ctx.jar, { photo_id: photoID ***REMOVED***
+      .get("https://www.facebook.com/mercury/attachments/photo", ctx.jar, { photo_id: photoID })
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(resData => {
         if (resData.error) {
@@ -20,10 +20,10 @@ module.exports = function (defaultFuncs, api, ctx) {
         var photoUrl = resData.jsmods.require[0][3][0];
 
         return callback(null, photoUrl);
-    ***REMOVED***
+      })
       .catch(err => {
         log.error("resolvePhotoUrl", err);
         return callback(err);
-    ***REMOVED***;
+      });
   };
 };

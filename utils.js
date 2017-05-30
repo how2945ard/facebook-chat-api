@@ -1,7 +1,7 @@
 "use strict";
 
 var bluebird = require("bluebird");
-var request = bluebird.promisify(require("request").defaults({jar: true***REMOVED***);
+var request = bluebird.promisify(require("request").defaults({jar: true}));
 var stream = require('stream');
 var log = require('npmlog');
 
@@ -43,7 +43,7 @@ function get(url, jar, qs) {
     gzip: true
   };
 
-  return request(op).then(function(res) {return res[0];***REMOVED***;
+  return request(op).then(function(res) {return res[0];});
 }
 
 function post(url, jar, form) {
@@ -57,7 +57,7 @@ function post(url, jar, form) {
     gzip: true
   };
 
-  return request(op).then(function(res) {return res[0];***REMOVED***;
+  return request(op).then(function(res) {return res[0];});
 }
 
 function postFormData(url, jar, form, qs) {
@@ -74,7 +74,7 @@ function postFormData(url, jar, form, qs) {
     gzip: true
   };
 
-  return request(op).then(function(res) {return res[0];***REMOVED***;
+  return request(op).then(function(res) {return res[0];});
 }
 
 function padZeros(val, len) {
@@ -159,20 +159,20 @@ var j = {
   }
   l.reverse();
   h = new RegExp(l.join("|"), 'g');
-***REMOVED***();
+})();
 
 function presenceEncode(str) {
   return encodeURIComponent(str).replace(/([_A-Z])|%../g, function(m, n) {
     return n ? '%' + n.charCodeAt(0).toString(16) : m;
-***REMOVED***.toLowerCase().replace(h, function(m) {
+  }).toLowerCase().replace(h, function(m) {
     return i[m];
-***REMOVED***;
+  });
 }
 
 function presenceDecode(str) {
   return decodeURIComponent(str.replace(/[_A-Z]/g, function(m) {
     return j[m];
-***REMOVED***);
+  }));
 }
 
 function generatePresence(userID) {
@@ -193,7 +193,7 @@ function generatePresence(userID) {
     "ch":{
       ["p_" + userID]: 0
     }
-***REMOVED***)
+  }))
 }
 
 function generateAccessiblityCookie() {
@@ -224,7 +224,7 @@ function getGUID() {
     /** @type {string} */
     var _guid = (c == "x" ? r : r & 7 | 8).toString(16);
     return _guid;
-***REMOVED***;
+  });
   return id;
 }
 
@@ -362,7 +362,7 @@ function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
       return _formatAttachment(val);
     }
     return _formatAttachment(val, attachmentMap[attachmentIds[i]]);
-***REMOVED*** : [];
+  }) : [];
 }
 
 function formatDeltaMessage(m){
@@ -389,12 +389,32 @@ function formatID(id){
 
 function formatMessage(m) {
   var originalMessage = m.message ? m.message : m;
-  var obj = {
+  var obj = {}
+  if (
+    originalMessage.delta &&
+    originalMessage.delta.messageMetadata
+  ) {
+    obj = {
+      type: "message",
+      senderID: originalMessage.delta.messageMetadata.actorFbId,
+      participantIDs: [],
+      body: originalMessage.delta.body,
+      threadID: originalMessage.delta.messageMetadata.threadKey.otherUserFbId,
+      messageID: originalMessage.delta.messageMetadata.messageId,
+      timestamp: originalMessage.delta.messageMetadata.timestamp,
+      tags: originalMessage.delta.messageMetadata.tags,
+      pageID: originalMessage.queue
+    }
+    return obj
+  }
+  obj = {
     type: "message",
     senderName: originalMessage.sender_name,
     senderID: formatID(originalMessage.sender_fbid.toString()),
     participantNames: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_names : [originalMessage.sender_name.split(' ')[0]]),
-    participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {return formatID(v.toString());***REMOVED*** : [formatID(originalMessage.sender_fbid)]),
+    participantIDs: (originalMessage.group_thread_info ? originalMessage.group_thread_info.participant_ids.map(function(v) {
+      return formatID(v.toString());
+    }) : [formatID(originalMessage.sender_fbid)]),
     body: originalMessage.body || "",
     threadID: formatID((originalMessage.thread_fbid || originalMessage.other_user_fbid).toString()),
     threadName: (originalMessage.group_thread_info ? originalMessage.group_thread_info.name : originalMessage.sender_name),
@@ -409,11 +429,12 @@ function formatMessage(m) {
     reactions: originalMessage.reactions ? originalMessage.reactions : []
   };
 
-  if(m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid.toString();
+  if (m.type === "pages_messaging") obj.pageID = m.realtime_viewer_fbid.toString();
   obj.isGroup = obj.participantIDs.length > 2;
 
   return obj;
 }
+
 
 function formatEvent(m) {
   var originalMessage = m.message ? m.message : m;
@@ -558,14 +579,14 @@ function makeParsable(html) {
 }
 
 function arrToForm(form) {
-  return arrayToObject(form, function(v) {return v.name;}, function(v) {return v.val;***REMOVED***;
+  return arrayToObject(form, function(v) {return v.name;}, function(v) {return v.val;});
 }
 
 function arrayToObject(arr, getKey, getValue) {
   return arr.reduce(function(acc, val) {
     acc[getKey(val)] = getValue(val);
     return acc;
-  ***REMOVED******REMOVED***;
+  }, {});
 }
 
 function getSignatureID(){
@@ -651,15 +672,15 @@ function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
           return bluebird
             .delay(retryTime)
             .then(function() {
-              return defaultFuncs.postFormData(url, ctx.jar, data.request.formData, {***REMOVED***;
-          ***REMOVED***
+              return defaultFuncs.postFormData(url, ctx.jar, data.request.formData, {});
+            })
             .then(parseAndCheckLogin(ctx, defaultFuncs, retryCount));
         } else {
           return bluebird
             .delay(retryTime)
             .then(function() {
               return defaultFuncs.post(url, ctx.jar, data.request.formData);
-          ***REMOVED***
+            })
             .then(parseAndCheckLogin(ctx, defaultFuncs, retryCount));
         }
       }
@@ -710,7 +731,7 @@ function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
         throw {error: "Not logged in."};
       }
       return res;
-  ***REMOVED***;
+    });
   };
 }
 
@@ -723,7 +744,7 @@ function saveCookies(jar) {
       }
       var c2 = c.replace(/domain=\.facebook\.com/, "domain=.messenger.com");
       jar.setCookie(c2, "https://www.messenger.com");
-  ***REMOVED***;
+    });
     return res;
   };
 }

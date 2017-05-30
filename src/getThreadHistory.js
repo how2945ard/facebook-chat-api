@@ -42,25 +42,25 @@ module.exports = function(defaultFuncs, api, ctx) {
           var userIDs = {};
           resData.payload.actions.forEach(function(v) {
             userIDs[v.author.split(":").pop()] = "";
-        ***REMOVED***;
+          });
 
           api.getUserInfo(Object.keys(userIDs), function(err, data){
-            if (err) return callback(err); //callback({error: "Could not retrieve user information in getThreadHistory."***REMOVED***;
+            if (err) return callback(err); //callback({error: "Could not retrieve user information in getThreadHistory."});
 
             resData.payload.actions.forEach(function (v) {
               v.sender_name = data[v.author.split(":").pop()].name;
               v.sender_fbid = v.author;
               delete v.author;
-          ***REMOVED***;
+            });
 
             callback(null, resData.payload.actions.map(utils.formatHistoryMessage));
-        ***REMOVED***;
-      ***REMOVED***
+          });
+        })
         .catch(function(err) {
           log.error("getThreadHistory", err);
           return callback(err);
-      ***REMOVED***;
-  ***REMOVED***;
+        });
+    });
 
   };
 };

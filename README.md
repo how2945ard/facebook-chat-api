@@ -29,8 +29,8 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
 
     api.listen((err, message) => {
         api.sendMessage(message.body, message.threadID);
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 Result:
@@ -101,7 +101,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
     var yourID = "000000000000000";
     var msg = "Hey!";
     api.sendMessage(msg, yourID);
-***REMOVED***;
+});
 ```
 
 __Example (File upload)__
@@ -118,7 +118,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
         attachment: fs.createReadStream(__dirname + '/image.jpg')
     }
     api.sendMessage(msg, yourID);
-***REMOVED***;
+});
 ```
 
 ------------------------------------
@@ -138,7 +138,7 @@ login(credentials, (err, api) => {
     if(err) return console.error(err);
 
     fs.writeFileSync('appstate.json', JSON.stringify(api.getAppState()));
-***REMOVED***;
+});
 ```
 
 ------------------------------------
@@ -146,7 +146,7 @@ login(credentials, (err, api) => {
 ### Listening to a chat
 #### api.listen(callback)
 
-Listen watches for messages sent in a chat. By default this won't receive events (joining/leaving a chat, title change etc…) but it can be activated with `api.setOptions({listenEvents: true***REMOVED***`. This will by default ignore messages sent by the current account, you can enable listening to your own messages with `api.setOptions({selfListen: true***REMOVED***`.
+Listen watches for messages sent in a chat. By default this won't receive events (joining/leaving a chat, title change etc…) but it can be activated with `api.setOptions({listenEvents: true})`. This will by default ignore messages sent by the current account, you can enable listening to your own messages with `api.setOptions({selfListen: true})`.
 
 __Example__
 
@@ -159,14 +159,14 @@ const login = require("facebook-chat-api");
 login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, api) => {
     if(err) return console.error(err);
 
-    api.setOptions({listenEvents: true***REMOVED***;
+    api.setOptions({listenEvents: true});
 
     var stopListening = api.listen((err, event) => {
         if(err) return console.error(err);
 
         api.markAsRead(event.threadID, (err) => {
             if(err) console.error(err);
-      ***REMOVED***;
+        });
 
         switch(event.type) {
             case "message":
@@ -177,11 +177,11 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
                 api.sendMessage("TEST BOT: " + event.body, event.threadID);
                 break;
             case "event":
-            ***REMOVED***;
+                console.log(event);
                 break;
         }
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ## FAQS
@@ -212,7 +212,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 > ```js
 > api.setOptions({
 >     logLevel: "silent"
-> ***REMOVED***;
+> });
 > ```
 
 ## Projects using this API

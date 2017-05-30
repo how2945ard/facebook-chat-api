@@ -91,7 +91,7 @@ const login = require("facebook-chat-api");
 login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
     if(err) return console.error(err);
     // Here you can use the api
-***REMOVED***;
+});
 ```
 
 __Example (Email & Password then save appState to file)__
@@ -104,7 +104,7 @@ login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
     if(err) return console.error(err);
 
     fs.writeFileSync('appstate.json', JSON.stringify(api.getAppState()));
-***REMOVED***;
+});
 ```
 
 __Example (AppState loaded from file)__
@@ -116,7 +116,7 @@ const login = require("facebook-chat-api");
 login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, api) => {
     if(err) return console.error(err);
     // Here you can use the api
-***REMOVED***;
+});
 ```
 
 __Login Approvals (2-Factor Auth)__: When you try to login with Login Approvals enabled, your callback will be called with an error `'login-approval'` that has a `continue` function that accepts the approval code as a `string` or a `number`.
@@ -131,7 +131,7 @@ const readline = require("readline");
 var rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
-***REMOVED***;
+});
 
 login(obj, (err, api) => {
     if(err) {
@@ -141,7 +141,7 @@ login(obj, (err, api) => {
                 rl.on('line', (line) => {
                     err.continue(line);
                     rl.close();
-              ***REMOVED***;
+                });
                 break;
             default:
                 console.error(err);
@@ -192,8 +192,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
     api.changeArchivedStatus("000000000000000", true, (err) => {
         if(err) return console.error(err);
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -232,8 +232,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
     api.changeGroupImage(fs.createReadStream("./avatar.png"), "000000000000000", (err) => {
         if(err) return console.error(err);
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -260,8 +260,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
     api.changeNickname("Example", "000000000000000", "000000000000000", (err) => {
         if(err) return console.error(err);
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -290,8 +290,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
     api.changeThreadColor("#0000ff", "000000000000000", (err) => {
         if(err) return console.error(err);
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -319,8 +319,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
     api.changeThreadEmoji("💯", "000000000000000", (err) => {
         if(err) return console.error(err);
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -350,8 +350,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
         "Option 2": true
     }, (err) => {
         if(err) return console.error(err);
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -379,10 +379,10 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
                 if(err) return console.error(err);
 
                 api.deleteMessage(messageInfo.messageID);
-          ***REMOVED***;
+            });
         }
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -408,8 +408,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
     api.deleteThread("000000000000000", (err) => {
         if(err) return console.error(err);
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -462,8 +462,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
         if(err) return console.error(err);
 
         console.log(data.length);
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -503,7 +503,7 @@ function loadNextThreadHistory(api){
         */
 
         timestamp = history[0].timestamp;
-  ***REMOVED***;
+    });
 }
 ```
 
@@ -578,8 +578,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
         var msg = "Hello!"
         var threadID = data[0].userID;
         api.sendMessage(msg, threadID);
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -611,8 +611,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
                 api.sendMessage("Happy birthday :)", prop);
             }
         }
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -634,7 +634,7 @@ __Arguments__
 ### api.listen(callback)
 
 Will call `callback` when a new message is received on this account.
-By default this won't receive events (joining/leaving a chat, title change etc...) but it can be activated with `api.setOptions({listenEvents: true***REMOVED***`.  This will by default ignore messages sent by the current account, you can enable listening to your own messages with `api.setOptions({selfListen: true***REMOVED***`. This returns `stopListening` that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue.
+By default this won't receive events (joining/leaving a chat, title change etc...) but it can be activated with `api.setOptions({listenEvents: true})`.  This will by default ignore messages sent by the current account, you can enable listening to your own messages with `api.setOptions({selfListen: true})`. This returns `stopListening` that will stop the `listen` loop and is guaranteed to prevent any future calls to the callback given to `listen`. An immediate call to `stopListening` when an error occurs will prevent the listen function to continue.
 
 __Arguments__
 
@@ -722,7 +722,7 @@ const login = require("facebook-chat-api");
 login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, api) => {
     if(err) return console.error(err);
 
-    api.setOptions({listenEvents: true***REMOVED***;
+    api.setOptions({listenEvents: true});
 
     var stopListening = api.listen((err, event) => {
         if(err) return console.error(err);
@@ -735,15 +735,15 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
                 }
                 api.markAsRead(event.threadID, (err) => {
                     if(err) console.log(err);
-              ***REMOVED***;
+                });
                 api.sendMessage("TEST BOT: " + event.body, event.threadID);
                 break;
             case "event":
-            ***REMOVED***;
+                console.log(event);
                 break;
         }
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -783,8 +783,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
         // Marks messages as read immediately after they're received
         api.markAsRead(message.threadID);
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -814,8 +814,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
 
         // Mute all incoming chats for one minute
         api.muteThread(message.threadID, 60);
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -898,7 +898,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
     var yourID = "000000000000000";
     var msg = {body: "Hey!"};
     api.sendMessage(msg, yourID);
-***REMOVED***;
+});
 ```
 
 __Example (File upload)__
@@ -916,7 +916,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
         attachment: fs.createReadStream(__dirname + '/image.jpg')
     }
     api.sendMessage(msg, yourID);
-***REMOVED***;
+});
 ```
 
 __Example (Mention)__
@@ -939,8 +939,8 @@ login({email: "EMAIL", password: "PASSWORD"}, (err, api) => {
                 }],
             }, message.threadID);
         }
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------
@@ -1016,7 +1016,7 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
     api.setOptions({
         selfListen: true,
         logLevel: "silent"
-  ***REMOVED***;
+    });
 
     api.listen((err, message) => {
         if(err) return console.error(err);
@@ -1025,8 +1025,8 @@ login({appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))}, (err, ap
         if (typeof message.body === "string") {
             api.sendMessage(message.body, message.threadID);
         }
-  ***REMOVED***;
-***REMOVED***;
+    });
+});
 ```
 
 ---------------------------------------

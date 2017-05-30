@@ -43,10 +43,10 @@ module.exports = function(defaultFuncs, api, ctx) {
         var data = resData.payload.entries;
 
         callback(null, data.map(formatData));
-    ***REMOVED***
+      })
       .catch(function(err) {
         log.error("getUserID", err);
         return callback(err);
-    ***REMOVED***;
+      });
   };
 };

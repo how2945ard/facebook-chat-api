@@ -30,7 +30,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       };
 
       uploads.push(defaultFuncs
-        .postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, {***REMOVED***
+        .postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, {})
         .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
         .then(function (resData) {
           if (resData.error) {
@@ -40,7 +40,7 @@ module.exports = function(defaultFuncs, api, ctx) {
           // We have to return the data unformatted unless we want to change it
           // back in sendMessage.
           return resData.payload.metadata[0];
-      ***REMOVED***);
+        }));
     }
 
     // resolve all promises
@@ -48,11 +48,11 @@ module.exports = function(defaultFuncs, api, ctx) {
       .all(uploads)
       .then(function(resData) {
         callback(null, resData);
-    ***REMOVED***
+      })
       .catch(function(err) {
         log.error("uploadAttachment", err);
         return callback(err);
-    ***REMOVED***;
+      });
   }
 
   function getUrl(url, callback) {
@@ -71,15 +71,15 @@ module.exports = function(defaultFuncs, api, ctx) {
         }
 
         if (!resData.payload) {
-          return callback({error: 'Invalid url'***REMOVED***;
+          return callback({error: 'Invalid url'});
         }
 
         callback(null, resData.payload.share_data.share_params);
-    ***REMOVED***
+      })
       .catch(function(err) {
         log.error("getUrl", err);
         return callback(err);
-    ***REMOVED***;
+      });
   }
 
   function sendContent(form, threadID, isSingleUser, messageAndOTID, callback) {
@@ -123,7 +123,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (!resData) {
-          return callback({error: "Send message failed."***REMOVED***;
+          return callback({error: "Send message failed."});
         }
 
         if (resData.error) {
@@ -142,11 +142,11 @@ module.exports = function(defaultFuncs, api, ctx) {
           } || p; }, null);
 
         return callback(null, messageInfo);
-    ***REMOVED***
+      })
       .catch(function(err) {
         log.error("sendMessage", err);
         return callback(err);
-    ***REMOVED***;
+      });
   }
 
   function send(form, threadID, messageAndOTID, callback) {
@@ -170,7 +170,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
         form['shareable_attachment[share_params]'] = params;
         cb();
-    ***REMOVED***;
+      });
     } else {
       cb();
     }
@@ -185,17 +185,17 @@ module.exports = function(defaultFuncs, api, ctx) {
 
   function handleEmoji(msg, form, callback, cb) {
     if (msg.emojiSize != null && msg.emoji == null) {
-      return callback({error: "emoji property is empty"***REMOVED***;
+      return callback({error: "emoji property is empty"});
     }
     if (msg.emoji) {
       if (msg.emojiSize == null) {
         msg.emojiSize = "medium";
       }
       if (msg.emojiSize != "small" && msg.emojiSize != "medium" && msg.emojiSize != "large") {
-        return callback({error: "emojiSize property is invalid"***REMOVED***;
+        return callback({error: "emojiSize property is invalid"});
       }
       if (form['body'] != null && form['body'] != "") {
-        return callback({error: "body is not empty"***REMOVED***;
+        return callback({error: "body is not empty"});
       }
       form['body'] = msg.emoji;
       form['tags[0]'] = "hot_emoji_size:" + msg.emojiSize;
@@ -224,9 +224,9 @@ module.exports = function(defaultFuncs, api, ctx) {
           var key = Object.keys(file);
           var type = key[0]; // image_id, file_id, etc
           form['' + type + 's'].push(file[type]); // push the id
-      ***REMOVED***;
+        });
         cb();
-    ***REMOVED***;
+      });
     } else {
       cb();
     }
@@ -239,7 +239,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
         const tag = mention.tag;
         if (typeof tag !== "string") {
-          return callback({error: "Mention tags must be strings."***REMOVED***;
+          return callback({error: "Mention tags must be strings."});
         }
 
         const offset = msg.body.indexOf(tag, mention.fromIndex || 0);
@@ -264,7 +264,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
   return function sendMessage(msg, threadID, callback) {
     if(!callback && (utils.getType(threadID) === 'Function' || utils.getType(threadID) === 'AsyncFunction')) {
-      return callback({error: "Pass a threadID as a second argument."***REMOVED***;
+      return callback({error: "Pass a threadID as a second argument."});
     }
     if(!callback) {
       callback = function() {};
@@ -274,12 +274,12 @@ module.exports = function(defaultFuncs, api, ctx) {
     var threadIDType = utils.getType(threadID);
 
     if(msgType !== "String" && msgType !== "Object") {
-      return callback({error: "Message should be of type string or object and not " + msgType + "."***REMOVED***;
+      return callback({error: "Message should be of type string or object and not " + msgType + "."});
     }
 
     // Changing this to accomodate an array of users
     if(threadIDType !== "Array" && threadIDType !== "Number" && threadIDType !== "String") {
-      return callback({error: "ThreadID should be of type number, string, or array and not " + threadIDType + "."***REMOVED***;
+      return callback({error: "ThreadID should be of type number, string, or array and not " + threadIDType + "."});
     }
 
     if (msgType === "String") {
@@ -288,7 +288,7 @@ module.exports = function(defaultFuncs, api, ctx) {
 
     var disallowedProperties = Object.keys(msg).filter(prop => !allowedProperties[prop]);
     if (disallowedProperties.length > 0) {
-      return callback({error: "Dissallowed props: `" + disallowedProperties.join(', ') + "`"***REMOVED***;
+      return callback({error: "Dissallowed props: `" + disallowedProperties.join(', ') + "`"});
     }
 
     var messageAndOTID = utils.generateOfflineThreadingID();

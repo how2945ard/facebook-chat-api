@@ -44,11 +44,11 @@ module.exports = function(defaultFuncs, api, ctx) {
 
           callback(null, utils.formatThread(threadData));
 
-      ***REMOVED***.catch(function(err) {
+        }).catch(function(err) {
           log.error("getThreadInfo", err);
           return callback(err);
-      ***REMOVED***;
-  ***REMOVED***;
+        });
+    });
 
   };
 };

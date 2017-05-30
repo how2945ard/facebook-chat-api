@@ -25,10 +25,10 @@ module.exports = function(defaultFuncs, api, ctx) {
         }
 
         return callback();
-    ***REMOVED***
+      })
       .catch(function(err) {
         log.error("changeThreadColor", err);
         return callback(err);
-    ***REMOVED***;
+      });
   };
 };

@@ -36,7 +36,7 @@ function formatData(obj) {
       vanity: user.vanity,
       isBirthday: !!user.is_birthday,
     }
-***REMOVED***;
+  });
 }
 
 module.exports = function(defaultFuncs, api, ctx) {
@@ -46,7 +46,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     }
 
     defaultFuncs
-      .postFormData("https://www.facebook.com/chat/user_info_all", ctx.jar, {***REMOVED***viewer: ctx.userID***REMOVED***
+      .postFormData("https://www.facebook.com/chat/user_info_all", ctx.jar, {}, {viewer: ctx.userID})
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function(resData) {
         if (!resData) {
@@ -56,10 +56,10 @@ module.exports = function(defaultFuncs, api, ctx) {
           throw resData;
         }
         callback(null, formatData(resData.payload));
-    ***REMOVED***
+      })
       .catch(function(err) {
         log.error("getFriendsList", err);
         return callback(err);
-    ***REMOVED***;
+      });
   };
 };

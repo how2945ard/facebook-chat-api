@@ -14,7 +14,7 @@ module.exports = function(defaultFuncs, api, ctx) {
     };
 
     uploads.push(defaultFuncs
-      .postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, {***REMOVED***
+      .postFormData("https://upload.facebook.com/ajax/mercury/upload.php", ctx.jar, form, {})
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function (resData) {
         if (resData.error) {
@@ -22,18 +22,18 @@ module.exports = function(defaultFuncs, api, ctx) {
         }
 
         return resData.payload.metadata[0];
-    ***REMOVED***);
+      }));
 
     // resolve all promises
     bluebird
       .all(uploads)
       .then(function(resData) {
         callback(null, resData);
-    ***REMOVED***
+      })
       .catch(function(err) {
         log.error("handleUpload", err);
         return callback(err);
-    ***REMOVED***;
+      });
   }
 
   return function changeGroupImage(image, threadID, callback) {
@@ -97,12 +97,12 @@ module.exports = function(defaultFuncs, api, ctx) {
           }
 
           return callback();
-      ***REMOVED***
+        })
         .catch(function(err) {
           log.error("changeGroupImage", err);
           return callback(err);
-      ***REMOVED***;
+        });
 
-  ***REMOVED***;
+    });
   };
 };

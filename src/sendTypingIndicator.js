@@ -33,12 +33,12 @@ module.exports = function(defaultFuncs, api, ctx) {
           }
 
           return callback();
-      ***REMOVED***
+        })
         .catch(function(err) {
           log.error("sendTypingIndicator", err);
           return callback(err);
-      ***REMOVED***;
-  ***REMOVED***;
+        });
+    });
   }
 
   return function sendTypingIndicator(threadID, callback) {

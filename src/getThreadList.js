@@ -54,10 +54,10 @@ module.exports = function(defaultFuncs, api, ctx) {
         }
         log.verbose("getThreadList", JSON.stringify(resData.payload.threads));
         return callback(null, (resData.payload.threads || []).map(utils.formatThread));
-    ***REMOVED***
+      })
       .catch(function(err) {
         log.error("getThreadList", err);
         return callback(err);
-    ***REMOVED***;
+      });
   };
 };

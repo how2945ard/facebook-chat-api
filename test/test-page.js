@@ -37,7 +37,7 @@ describe('Login As Page:', function() {
   this.timeout(20000);
 
   function listen(done, matcher) {
-    tests.push({matcher:matcher, done:done***REMOVED***;
+    tests.push({matcher:matcher, done:done});
   }
 
   before(function(done) {
@@ -51,20 +51,20 @@ describe('Login As Page:', function() {
         // Removes matching function and calls corresponding done
         tests = tests.filter(function(test) {
           return !(test.matcher(msg) && (test.done() || true));
-      ***REMOVED***;
-    ***REMOVED***;
+        });
+      });
 
       done();
-  ***REMOVED***;
-***REMOVED***;
+    });
+  });
 
   it('should login without error', function (){
     assert(api);
-***REMOVED***;
+  });
 
   it('should get the right user ID', function (){
     assert(userID == api.getCurrentUserID());
-***REMOVED***;
+  });
 
   it('should send text message object (user)', function (done){
     var body = "text-msg-obj-" + Date.now();
@@ -74,7 +74,7 @@ describe('Login As Page:', function() {
       msg.isGroup === false
     );
     api.sendMessage({body: body}, userID, checkErr(done));
-***REMOVED***;
+  });
 
   it('should send sticker message object (user)', function (done){
     var stickerID = '767334526626290';
@@ -86,7 +86,7 @@ describe('Login As Page:', function() {
       msg.isGroup === false
     );
     api.sendMessage({sticker: stickerID}, userID, checkErr(done));
-***REMOVED***;
+  });
 
   it('should send basic string (user)', function (done){
     var body = "basic-str-" + Date.now();
@@ -96,15 +96,15 @@ describe('Login As Page:', function() {
       msg.isGroup === false
     );
     api.sendMessage(body, userID, checkErr(done));
-***REMOVED***;
+  });
 
   it('should send typing indicator', function (done) {
     var stopType = api.sendTypingIndicator(userID, function(err) {
       checkErr(done)(err);
       stopType();
       done();
-  ***REMOVED***;
-***REMOVED***;
+    });
+  });
 
   it('should get the right user info', function (done) {
     api.getUserInfo(userID, function(err, data) {
@@ -118,23 +118,23 @@ describe('Login As Page:', function() {
       assert(user.type);
       assert(!user.isFriend);
       done();
-  ***REMOVED***;
-***REMOVED***;
+    });
+  });
 
   it('should get the list of friends', function (done) {
     api.getFriendsList(function(err, data) {
       checkErr(done)(err);
       assert(getType(data) === "Array");
-      data.map(function(v) {parseInt(v);***REMOVED***;
+      data.map(function(v) {parseInt(v);});
       done();
-  ***REMOVED***;
-***REMOVED***;
+    });
+  });
 
   it('should log out', function (done) {
     api.logout(done);
-***REMOVED***;
+  });
 
   after(function (){
     if (stopListening) stopListening();
-***REMOVED***;
-***REMOVED***;
+  });
+});

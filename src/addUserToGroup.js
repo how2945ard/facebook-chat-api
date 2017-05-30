@@ -68,10 +68,10 @@ module.exports = function(defaultFuncs, api, ctx) {
       }
 
       return callback();
-  ***REMOVED***
+    })
     .catch(function(err) {
       log.error("addUserToGroup", err);
       return callback(err);
-  ***REMOVED***;
+    });
   };
 };

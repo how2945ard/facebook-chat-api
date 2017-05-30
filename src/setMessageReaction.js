@@ -48,7 +48,7 @@ module.exports = function(defaultFuncs, api, ctx) {
         reaction = "\uD83D\uDC4E";
         break;
       default:
-        return callback({error: "Reaction is not a valid emoji."***REMOVED***;
+        return callback({error: "Reaction is not a valid emoji."});
         break;
     }
 
@@ -79,10 +79,10 @@ module.exports = function(defaultFuncs, api, ctx) {
           throw resData;
         }
         callback(null);
-    ***REMOVED***
+      })
       .catch(function(err) {
         log.error("setReaction", err);
         return callback(err);
-    ***REMOVED***;
+      });
   };
 };

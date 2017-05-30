@@ -84,7 +84,7 @@ module.exports = {
                         "payment_module_config": null
                       },
                       "is_disabled": false
-                    ***REMOVED***
+                    }, {
                       "action_link": "http://l.facebook.com/l.php?u=http%3A%2F%2Fyahoo.com%2F&h=ATNIuTf7iDGP5xXTWOAdhaGhRFfDf4eS09t_G9CrR0MDiBKpqtCDzPf_9y5Bq7TXMgmo6RttztsgeO0ReSc0PDvJDTa1fLMMK2CjrpkqC91_m-yaMXfeQ4aI6MbhZrOPnK3YFnQP4XvRx3N1udE",
                       "action_type": 2,
                       "id": "CDE=",
@@ -101,7 +101,7 @@ module.exports = {
                         "payment_module_config": null
                       },
                       "is_disabled": false
-                    ***REMOVED***
+                    }, {
                       "action_link": "http://l.facebook.com/l.php?u=http%3A%2F%2Fbing.com%2F&h=ATMoMijAt6Da6WWIQ679DhZyZizWdxAViWwyl-RjKobFUG_x8GmB8LD6pPa3KP5K1-QTL9vuaFwjqB0itaMFWk4VwQ9uh56JgnbFnAo4qM_CrQufgLeHwwCnWSCnZt8IzYT4y6YULLLFA5bL1H4",
                       "action_type": 2,
                       "id": "ABC=",
